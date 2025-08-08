@@ -1,5 +1,10 @@
-<app-sorce-input></app-sorce-input>
-<app-word-highlight></app-word-highlight>
-<app-word-list></app-word-list>
+<app-sorce-input (text)="OnGetText($event)"></app-sorce-input>
+<div class="text-content">
+  <app-word-highlight class="text-content__highlight"
+    [textToProcess]="textToProcess"
+    (selectedWord)="OnGetSelectedWord($event)"
+  ></app-word-highlight>
+  <app-word-list class="text-content__word-list" [selectedWord]="selectedWord"></app-word-list>
+</div>
 
 <router-outlet />

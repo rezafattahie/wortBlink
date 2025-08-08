@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   it(`should have the 'wortBlink' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('wortBlink');
+    expect(app.title).toEqual('Wort blink');
   });
 
   it('should render title', () => {

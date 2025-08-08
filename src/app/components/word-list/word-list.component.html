@@ -1,1 +1,8 @@
-<p>word-list works!</p>
+<div class="text-list">
+  <h3>Liste der ausgewählten Wörter:</h3>
+  <ul id="clickedWords">
+    @if (wordlist().length > 0) { @for (word of wordlist(); track $index) {
+    <li>{{ word }}</li>
+    } }
+  </ul>
+</div>

@@ -1,0 +1,38 @@
+.text-process {
+  padding: 1rem 0.5rem;
+  font-size: 18px;
+  width: 75vw;
+  overflow: auto;
+  height: 90vh;
+
+  &__line {
+    text-align: justify;
+    text-justify: inter-word;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.1rem;
+    transition: background 0.3s;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 100%;
+    }
+
+    &:hover {
+      background-color: #f2d9b9;
+    }
+  }
+
+  &__word {
+    cursor: pointer;
+    padding: 0.3rem 0.4rem;
+    display: inline-block;
+    white-space: nowrap;
+    margin: 0 2px;
+
+    &:hover {
+      background-color: #1a235f;
+      color: #f0f8ff;
+    }
+  }
+}

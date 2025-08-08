@@ -1,1 +1,9 @@
-<p>word-highlight works!</p>
+<div class="text-process">
+  @for (line of lines(); track $index) {
+  <div class="text-process__line">
+    @for (word of line.words; track $index) {
+    <span class="text-process__word" (click)="onSelectWord(word)">{{ word}}</span>
+    }
+  </div>
+  }
+</div>

@@ -1,1 +1,19 @@
-<p>sorce-input works!</p>
+<div class="source" [class.show]="showSource">
+  <div class="source-header">
+    <h2 class="source-header__title">Text eingeben</h2>
+    <button class="source-header__button" (click)="onTextTransfere()">
+      Text verarbeiten
+    </button>
+  </div>
+
+  <div class="source-content">
+    <textarea
+      [(ngModel)]="inputText"
+      class="source-inputText"
+      placeholder="Geben Sie hier Ihren Text ein..."
+    ></textarea>
+  </div>
+  @if (!showSource) {
+  <button class="toggle" (click)="toggleSource()"></button>
+  }
+</div>
