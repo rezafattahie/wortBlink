@@ -7,7 +7,7 @@ app.use(cors());
 const PORT = 3000;
 
 let browser;
-let page; // تب ثابت
+let page; // permanent Tab
 
 (async () => {
   console.log('Starting browser...');
@@ -16,10 +16,10 @@ let page; // تب ثابت
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
 
-  // یک تب ثابت باز می‌کنیم
+  // open a permanent Tab
   page = await browser.newPage();
 
-  // بلاک‌کردن فایل‌های سنگین برای سرعت
+  // block big files
   await page.setRequestInterception(true);
   page.on('request', (req) => {
     if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
@@ -41,7 +41,7 @@ app.get('/api/search/cons', async (req, res) => {
   }
 
   try {
-    // درخواست به API داخل همان تب
+    // send request in same Tab
     const data = await page.evaluate(async (search) => {
       const resp = await fetch(`https://wort.app/api/search/cons?q=${encodeURIComponent(search)}`, {
         headers: {
