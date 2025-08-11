@@ -1,8 +1,4 @@
-import {
-  HttpClient,
-  HttpClientModule,
-  HttpHeaders,
-} from '@angular/common/http';
+import {} from '@angular/common/http';
 import {
   Component,
   effect,
@@ -13,15 +9,17 @@ import {
   inject,
 } from '@angular/core';
 
+import { TranslateService } from '../../services/translate.service';
+
 @Component({
   selector: 'app-word-highlight',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [],
   templateUrl: './word-highlight.component.html',
   styleUrl: './word-highlight.component.scss',
 })
 export class WordHighlightComponent {
-  http = inject(HttpClient);
+  translateService = inject(TranslateService);
 
   textToProcess = input<string>('');
   @Output() selectedWord = new EventEmitter<string>();
@@ -46,52 +44,6 @@ export class WordHighlightComponent {
 
   onSelectWord(word: string) {
     this.selectedWord.emit(word);
-    // this.http
-    //   .get(
-    //     `/api/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${word}.json?slug=${word}`
-    //   )
-    //   .subscribe({
-    //     next: (res: any) => {
-    //       res.pageProps.vocab
-    //         ? alert(
-    //             res.pageProps.vocab.data.definitions[0].title
-    //               ? res.pageProps.vocab.data.definitions[0].title
-    //               : res.pageProps.vocab.data.title +
-    //                   ' ' +
-    //                   res.pageProps.vocab.data.definitions[0].details
-    //           )
-    //         : this.http
-    //             .get(
-    //               `/api/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${
-    //                 word.charAt(0).toUpperCase() + word.slice(1)
-    //               }.json?slug=${word}`
-    //             )
-    //             .subscribe({
-    //               next: (res: any) => {
-    //                 res.pageProps.vocab
-    //                   ? alert(
-    //                       res.pageProps.vocab.data.type +
-    //                         '' +
-    //                         res.pageProps.vocab.data.definitions[0].title
-    //                     )
-    //                   :
-                       this.http
-                          .get(
-                            `http://localhost:3000/api/search/cons?q=${word}`
-                          )
-                          .subscribe({
-                            next: (result: any) => {
-                              alert(result.verb);
-                              console.log('Response:', result);
-                            },
-                            error: (err) => {
-                              console.error('Error:', err);
-                            },
-                          });
-      //             },
-      //           });
-      //   },
-      // });
-    // });
+    this.translateService.getWordsInfo(word);
   }
 }

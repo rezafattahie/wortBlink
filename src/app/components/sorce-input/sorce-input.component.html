@@ -13,7 +13,10 @@
       placeholder="Geben Sie hier Ihren Text ein..."
     ></textarea>
   </div>
-  @if (!showSource) {
-  <button class="toggle" (click)="toggleSource()"></button>
-  }
+
+  <button
+    class="toggle"
+    [style.transform]="showSource ? 'rotate(45deg)' : 'rotate(225deg)'"
+    (click)="toggleSource()"
+  ></button>
 </div>
