@@ -3,5 +3,4 @@ export interface IVocab {
   title: string;
   type: string;
   forPremium: boolean;
-}
-[];
+};

@@ -4,5 +4,4 @@ export interface IDaily {
   subcategoryDe: string;
   subcategoryFa: string;
   forPremium: boolean;
-}
-[];
+};

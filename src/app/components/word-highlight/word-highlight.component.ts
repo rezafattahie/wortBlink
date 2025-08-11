@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 
 import { TranslateService } from '../../services/translate.service';
+import { wordInfoSignal } from '../../signal-store/wordInfo.signal-store';
 
 @Component({
   selector: 'app-word-highlight',
@@ -26,7 +27,14 @@ export class WordHighlightComponent {
   lines = signal<{ line: number; words: string[] }[]>([]);
 
   constructor() {
-    effect(() => this.processText(), { allowSignalWrites: true });
+    effect(
+      () => {
+        this.processText();
+        const info = wordInfoSignal();
+        console.log(info);
+      },
+      { allowSignalWrites: true }
+    );
   }
 
   processText() {
