@@ -2,7 +2,7 @@
   @for (line of lines(); track $index) {
   <div class="text-process__line">
     @for (word of line.words; track $index) {
-    <span class="text-process__word" (dblclick)="onSelectWord(word)">{{
+    <span class="text-process__word" (click)="onSelectWord(word)">{{
       word
     }}</span>
     }
@@ -11,5 +11,29 @@
 </div>
 
 <app-card>
-  <div #cardTemplate></div>
+  <ng-template #cardTemplate let-result="result">
+    @if (result()?.translates?.[0]?.vocab?.data) {
+    <div>
+      ({{ result()?.translates?.[0]?.vocab?.data?.type ?? "not found" }})&nbsp;
+      {{ result()?.translates?.[0]?.vocab?.data?.title ?? "not found" }}
+      #############
+      {{result()?.translates?.[0]?.vocab?.data?.definitions?.[0]?.details ?? "not found"}}
+      <br />------------------------------------------ <br />
+    </div>
+    <div>
+      {{ result()?.translates?.[0]?.vocab?.data?.definitions?.[0]?.title ?? "not found" }}
+    </div>
+    } @if (result()?.translates?.[1]?.vocab?.data) {
+    <div>
+      ({{ result()?.translates?.[1]?.vocab?.data?.type ?? "not found" }})&nbsp;
+      {{ result()?.translates?.[1]?.vocab?.data?.title ?? "not found" }}
+      #############
+      {{result()?.translates?.[1]?.vocab?.data?.definitions?.[1]?.details ?? "not found"}}
+      <br />------------------------------------------
+    </div>
+    <div>
+      {{ result()?.translates?.[1]?.vocab?.data?.definitions?.[1]?.title ?? "not found" }}
+    </div>
+    }
+  </ng-template>
 </app-card>

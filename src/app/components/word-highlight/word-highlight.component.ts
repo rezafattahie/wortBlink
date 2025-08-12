@@ -7,9 +7,9 @@ import {
   EventEmitter,
   signal,
   inject,
-  viewChild,
   ViewChild,
   TemplateRef,
+  computed,
 } from '@angular/core';
 
 import { TranslateService } from '../../services/translate.service';
@@ -29,6 +29,7 @@ export class WordHighlightComponent {
   cardService = inject(CardService);
 
   textToProcess = input<string>('');
+  wordDetails = computed(() => wordInfoSignal());
   @Output() selectedWord = new EventEmitter<string>();
   lines = signal<{ line: number; words: string[] }[]>([]);
   @ViewChild('cardTemplate') cardTemplate!: TemplateRef<any>;
@@ -62,7 +63,7 @@ export class WordHighlightComponent {
     this.translateService.getWordsInfo(word);
     this.cardService.showCard(word, {
       template: this.cardTemplate,
-      context: '',
+      context: { result: this.wordDetails },
     });
   }
 }
