@@ -12,7 +12,7 @@ import { EndpointMap } from '../models/endpointMap.type';
 
 
 
-// ساختار state
+// state structure
 type WordInfoState = Partial<EndpointMap> & {
   translates: ITranslate[];
 };

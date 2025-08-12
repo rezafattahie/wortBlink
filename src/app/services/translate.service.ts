@@ -1,26 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { forkJoin, map } from 'rxjs';
-import { ITranslate } from '../models/translate.interface';
+
 import { EndpointMap } from '../models/endpointMap.type';
 import { wordInfoSignal } from '../signal-store/wordInfo.signal-store';
 import { IVocab } from '../models/vocab.interface';
 import { IDaily } from '../models/daily.interface.ts';
 import { IPhrase } from '../models/phraseinterface';
+import { WordService } from './word.service';
+import { ITranslate } from '../models/translate.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TranslateService {
   http = inject(HttpClient);
+  wordService = inject(WordService);
+
   endpoints: (keyof EndpointMap)[] = ['cons', 'vocab', 'phrase', 'daily'];
 
   tranlates?: ITranslate[] = [];
   getWordsInfo(word: string) {
-    let newWord = word;
+    const noUmlautWord = this.wordService.replaceUmlauts(word);
     const requests = this.endpoints.map((endpoint) =>
       this.http.get<EndpointMap[typeof endpoint]>(
-        `http://localhost:3000/api/search/${endpoint}?q=${word}`
+        `http://localhost:3000/api/search/${endpoint}?q=${noUmlautWord}`
       )
     );
     forkJoin(requests).subscribe({
@@ -69,21 +73,19 @@ export class TranslateService {
   }
 
   getTranslation(slug: string, word: string) {
+    const noUmlautWord = this.wordService.replaceUmlauts(word);
     return this.http
       .get<ITranslate>(
-        `/api/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${word}`
+        `/api/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${noUmlautWord}`
       )
       .pipe(
-        map((vocab) => {
+        map((vocab: any) => {
           return {
-            pageProps: {
-              vocab: {
-                data: vocab.pageProps.vocab.data,
-                meta: vocab.pageProps.vocab.meta,
-                title: vocab.pageProps.vocab.title,
-              },
+            vocab: {
+              data: vocab.pageProps.vocab.data,
+              meta: vocab.pageProps.vocab.meta,
+              title: vocab.pageProps.vocab.title,
             },
-            __N_SSP: vocab.__N_SSP,
           };
         })
       );

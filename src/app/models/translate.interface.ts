@@ -1,11 +1,5 @@
 export interface ITranslate {
-  pageProps: PageProps;
-  __N_SSP: boolean;
-}
-
-export interface PageProps {
   vocab: Vocab;
-
 }
 
 export interface Vocab {
@@ -28,13 +22,12 @@ export interface Data {
 export interface Definition {
   title: string;
   details: string;
-  examples: example[];
-  phrases: example[];
+  examples: example_phrase[];
+  phrases: example_phrase[];
 }
 
-export interface example {
-  de: string
-  fa: string
-  id: string
+export interface example_phrase {
+  de: string;
+  fa: string;
+  id: string;
 }
-

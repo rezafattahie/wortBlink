@@ -6,9 +6,11 @@
   flex-direction: column;
   height: 70vh;
   width: calc(100% - 4rem);
-  background-color: #766e7f;
+  background: linear-gradient(0deg, #361c7196, #fff);
+  box-shadow: 0px 2px 9px;
   padding: 1rem 2rem;
-  transition: transform 0.3s ease-in-out;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
   &-header {
     display: flex;
@@ -57,11 +59,12 @@
 
 .show {
   transform: none;
+  border-radius: 0;
 }
 
 .toggle {
   border: none;
-  background: linear-gradient(135deg, #d6ff00, transparent 60%);
+  background: linear-gradient(135deg, #ff0000, transparent 60%);
   position: absolute;
   bottom: 8px;
   left: 50%;
