@@ -2,8 +2,14 @@
   @for (line of lines(); track $index) {
   <div class="text-process__line">
     @for (word of line.words; track $index) {
-    <span class="text-process__word" (click)="onSelectWord(word)">{{ word}}</span>
+    <span class="text-process__word" (dblclick)="onSelectWord(word)">{{
+      word
+    }}</span>
     }
   </div>
   }
 </div>
+
+<app-card>
+  <div #cardTemplate></div>
+</app-card>

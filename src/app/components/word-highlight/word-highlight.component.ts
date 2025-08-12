@@ -7,24 +7,31 @@ import {
   EventEmitter,
   signal,
   inject,
+  viewChild,
+  ViewChild,
+  TemplateRef,
 } from '@angular/core';
 
 import { TranslateService } from '../../services/translate.service';
 import { wordInfoSignal } from '../../signal-store/wordInfo.signal-store';
+import { CardComponent } from '../card/card.component';
+import { CardService } from '../../services/card.service';
 
 @Component({
   selector: 'app-word-highlight',
   standalone: true,
-  imports: [],
+  imports: [CardComponent],
   templateUrl: './word-highlight.component.html',
   styleUrl: './word-highlight.component.scss',
 })
 export class WordHighlightComponent {
   translateService = inject(TranslateService);
+  cardService = inject(CardService);
 
   textToProcess = input<string>('');
   @Output() selectedWord = new EventEmitter<string>();
   lines = signal<{ line: number; words: string[] }[]>([]);
+  @ViewChild('cardTemplate') cardTemplate!: TemplateRef<any>;
 
   constructor() {
     effect(
@@ -53,5 +60,9 @@ export class WordHighlightComponent {
   onSelectWord(word: string) {
     this.selectedWord.emit(word);
     this.translateService.getWordsInfo(word);
+    this.cardService.showCard(word, {
+      template: this.cardTemplate,
+      context: '',
+    });
   }
 }
