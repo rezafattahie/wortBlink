@@ -41,7 +41,6 @@ export class WordHighlightComponent {
       () => {
         this.processText();
         const info = wordInfoSignal();
-        console.log(info);
       },
       { allowSignalWrites: true }
     );

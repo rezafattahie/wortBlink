@@ -30,7 +30,6 @@ export class TranslateService {
     forkJoin(requests).subscribe({
       next: (results) => {
         return results.forEach((result, i) => {
-          console.log(`${this.endpoints[i]}:`, result);
           const key = this.endpoints[i] as keyof EndpointMap;
           let filtered = result;
           if (key === 'vocab') {
