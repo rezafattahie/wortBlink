@@ -40,7 +40,7 @@ export class TranslateService {
 
               return consVerb
                 ? this.getTranslation(consVerb, consVerb)
-                : this.getTranslation(vocab.slug, vocab.title);
+                : this.getTranslation(vocab.slug, vocab.slug);
             });
 
             forkJoin(vocabTranslations$).subscribe((translations) => {

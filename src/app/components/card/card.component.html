@@ -1,25 +1,18 @@
 @if (visible()) {
 <div class="modal" (click)="close()">
-  <div class="modal-card">
+  <div
+    class="modal-card"
+    (click)="$event.stopPropagation()"
+    [style]="{
+      top: UpdatedPosition().top == 0 ? '' : UpdatedPosition().top + 'px',
+      left: UpdatedPosition().left == 0 ? '' : UpdatedPosition().left + 'px', 
+      right: UpdatedPosition().right == 0 ? '' : UpdatedPosition().right + 'px', 
+      bottom: UpdatedPosition().bottom == 0 ? '' : UpdatedPosition().bottom + 'px',
+      
+    }"
+  >
     <div class="modal-card__header">
-      <div class="modal-card__actions">
-        <!-- <a class="modal-card__action modal-card__action--close" (click)="close()">
-        <rz-icon
-          name="return"
-          [size]="20"
-          color="#97012e"
-          hoverColor="#2d010e"
-        ></rz-icon>
-      </a>
-      <a class="modal-card__action modal-card__action--ok" (click)="close()">
-        <rz-icon
-          name="tick"
-          [size]="23"
-          color="#007e5e"
-          hoverColor="#104e3d"
-        ></rz-icon>
-      </a> -->
-      </div>
+      <div class="modal-card__actions"></div>
 
       <h4 class="modal-card__title">{{ title() }}</h4>
     </div>

@@ -1,39 +1,71 @@
 <div class="text-process">
-  @for (line of lines(); track $index) {
+  @for (line of lines(); track $index) { @if (line) {
   <div class="text-process__line">
     @for (word of line.words; track $index) {
-    <span class="text-process__word" (click)="onSelectWord(word)">{{
+    <span class="text-process__word" (click)="onSelectWord(word, $event)">{{
       word
     }}</span>
     }
   </div>
-  }
+  } }
 </div>
 
-<app-card>
+<app-card [position]="clickedPosition">
   <ng-template #cardTemplate let-result="result">
-    @if (result()?.translates?.[0]?.vocab?.data) {
-    <div>
-      ({{ result()?.translates?.[0]?.vocab?.data?.type ?? "not found" }})&nbsp;
-      {{ result()?.translates?.[0]?.vocab?.data?.title ?? "not found" }}
-      #############
-      {{result()?.translates?.[0]?.vocab?.data?.definitions?.[0]?.details ?? "not found"}}
-      <br />------------------------------------------ <br />
+    <div class="tabs">
+      <button
+        (click)="activeTab = 'translation'"
+        [class.active]="activeTab === 'translation'"
+      >
+        Translation
+      </button>
+      <button
+        (click)="activeTab = 'examples'"
+        [class.active]="activeTab === 'examples'"
+      >
+        Examples
+      </button>
+      <button
+        (click)="activeTab = 'phrases'"
+        [class.active]="activeTab === 'phrases'"
+      >
+        Phrases
+      </button>
+      <button
+        (click)="activeTab = 'daily'"
+        [class.active]="activeTab === 'daily'"
+      >
+        Daily
+      </button>
     </div>
-    <div>
-      {{ result()?.translates?.[0]?.vocab?.data?.definitions?.[0]?.title ?? "not found" }}
+    <div class="tab-content">
+      <!-- TRANSLATION -->
+      @if (activeTab === 'translation') { @for (t of result()?.translates; track
+      t) {
+      <p>{{ t.vocab.data.type }} - {{ t.vocab.data.title }}</p>
+      @for (def of t.vocab.data.definitions; track def) {
+      {{ def.title || "-" }}
+      <p>{{ def.details || "-" }}</p>
+      }
+      <hr />
+      } }
+
+      <!-- EXAMPLES -->
+      @if (activeTab === 'examples') { @for (ex of getAllExamples(result());
+      track ex) {
+      <p>{{ ex.de }}— {{ ex.fa }}</p>
+      } }
+
+      <!-- PHRASES -->
+      @if (activeTab === 'phrases') { @for (p of result()?.phrase; track p) {
+      <p>{{ p.de }}— {{ p.fa }}</p>
+      } }
+
+      <!-- DAILY -->
+      @if (activeTab === 'daily') { @for (d of result()?.daily; track d) {
+      <p>{{ d.de }}— {{ d.fa }}</p>
+      <small>{{ d.subcategoryDe }} / {{ d.subcategoryFa }}</small>
+      } }
     </div>
-    } @if (result()?.translates?.[1]?.vocab?.data) {
-    <div>
-      ({{ result()?.translates?.[1]?.vocab?.data?.type ?? "not found" }})&nbsp;
-      {{ result()?.translates?.[1]?.vocab?.data?.title ?? "not found" }}
-      #############
-      {{result()?.translates?.[1]?.vocab?.data?.definitions?.[1]?.details ?? "not found"}}
-      <br />------------------------------------------
-    </div>
-    <div>
-      {{ result()?.translates?.[1]?.vocab?.data?.definitions?.[1]?.title ?? "not found" }}
-    </div>
-    }
   </ng-template>
 </app-card>

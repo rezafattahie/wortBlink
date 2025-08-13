@@ -4,16 +4,18 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
-  height: 70vh;
+  height: auto;
+  min-height: 20vh;
   width: calc(100% - 4rem);
-  background: linear-gradient(0deg, #361c7196, #fff);
-  box-shadow: 0px 2px 9px;
-  padding: 1rem 2rem;
-  border-radius: 50%;
+  background: linear-gradient(0deg, #1c6790, #22787a);
+  box-shadow: 0px 2px 5px;
+  padding: 3rem 2rem;
+  border-radius: 20%;
   transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
   &-header {
     display: flex;
+    color: beige;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.5rem;
@@ -21,40 +23,51 @@
 
   &-content {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
-  &-inputText {
-    width: calc(100% - 2rem);
-    border-radius: 0.5rem;
-    height: 40vh;
-    resize: none;
+  .source-inputText {
+    min-height: 1.5rem;
+    max-height: 50vh;
+    overflow-y: auto;
     font-size: 16px;
-    margin-bottom: 10px;
     padding: 1rem;
-    transition: box-shadow 0.5s;
+    border-radius: 0.5rem;
+    background: white;
     outline: none;
-
-    &:focus {
-      box-shadow: 0px 0px 5px #000000;
-      border: none;
-    }
+    white-space: pre-wrap;
+    word-break: break-word;
   }
+
+  .source-inputText:empty:before {
+    content: attr(placeholder);
+    color: #888;
+  }
+}
+.source-inputText-wrapper {
+  position: relative;
+  width: 100%;
 }
 
 .source-header__button {
-  width: 30vw;
+  position: absolute;
+  bottom: 0.25rem;
+  right: 2rem;
+  width: 3rem;
   height: 3rem;
-  background-color: #235b77;
-  color: #faf9ee;
+  color: #000000;
   border: none;
-  padding: 1rem;
   border-radius: 2rem;
   cursor: pointer;
-  font-size: 15px;
-}
+  font-size: 30px;
+  background: transparent;
+  z-index: 200;
 
-.source-header__button:hover {
-  background-color: #17313e;
+  &:hover {
+    background: linear-gradient(0deg, #1c6790, #22787a);
+  }
 }
 
 .show {

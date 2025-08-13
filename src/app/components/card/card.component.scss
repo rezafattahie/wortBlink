@@ -10,15 +10,13 @@
   z-index: 1000;
   padding: 1rem 2rem 2rem;
   position: absolute;
-  top: 50%;
-  left: 50%;
   width: 35%;
   height: 80%;
   background-color: #242b34;
-  color: #fff7de;
-  transform: translate(-50%, -50%);
+  color: #c0e1ff;
+
   border-radius: 2rem;
-  box-shadow: 1px 1px 5px #fff7de;
+  box-shadow: 1px 1px 5px #201b0c;
   animation: modal-card-toggle 0.1s;
 
   @keyframes modal-card-toggle {
@@ -62,7 +60,7 @@
   &__content {
     height: 90%;
     overflow: auto;
-    scrollbar-color: #242b34 transparent;
+    scrollbar-color: #5b5b5a  transparent;
     scrollbar-width: thin;
   }
 
