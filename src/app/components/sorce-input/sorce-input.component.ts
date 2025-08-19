@@ -13,16 +13,14 @@ export class SorceInputComponent {
   showSource = true;
   @Output() text = new EventEmitter<string>();
 
-
   onInputChange(event: Event) {
-  const target = event.target as HTMLElement;
-  this.inputText = target.innerText || '';
-}
+    const target = event.target as HTMLElement;
+    this.inputText = target.innerText  || '';
+  }
   onTextTransfere() {
     this.toggleSource();
-    this.text.emit(this.inputText);   }
-
-
+    this.text.emit(this.inputText);
+  }
 
   toggleSource() {
     this.showSource = !this.showSource;
