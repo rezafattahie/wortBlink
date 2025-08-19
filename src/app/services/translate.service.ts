@@ -20,23 +20,29 @@ export class TranslateService {
   endpoints: (keyof EndpointMap)[] = ['cons', 'vocab', 'phrase', 'daily'];
 
   tranlates?: ITranslate[] = [];
+
   getWordsInfo(word: string) {
+    //use origin (https://app-reza.de or http://localhost:4200)
+    const baseUrl = window.location.origin;
     const noUmlautWord = this.wordService.replaceUmlauts(word);
+
     const requests = this.endpoints.map((endpoint) =>
       this.http.get<EndpointMap[typeof endpoint]>(
-        `http://localhost:3000/api/search/${endpoint}?q=${noUmlautWord}`
+        `${baseUrl}/api/search/${endpoint}?q=${noUmlautWord}`
       )
     );
+
     forkJoin(requests).subscribe({
       next: (results) => {
         return results.forEach((result, i) => {
           const key = this.endpoints[i] as keyof EndpointMap;
           let filtered = result;
+
           if (key === 'vocab') {
             filtered = (result as IVocab[]).slice(0, 5);
+
             const vocabTranslations$ = (filtered as IVocab[]).map((vocab) => {
               const consVerb = wordInfoSignal().cons?.verb?.trim();
-
               return consVerb
                 ? this.getTranslation(consVerb, consVerb)
                 : this.getTranslation(vocab.slug, vocab.slug);
@@ -58,6 +64,7 @@ export class TranslateService {
               translates: this.tranlates ?? wordInfoSignal().translates,
             });
           }
+
           wordInfoSignal.set({
             ...wordInfoSignal(),
             [key]: filtered,
@@ -71,22 +78,21 @@ export class TranslateService {
     });
   }
 
-  getTranslation(slug: string, word: string) {
-    const noUmlautWord = this.wordService.replaceUmlauts(word);
-    return this.http
-      .get<ITranslate>(
-        `/api/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${noUmlautWord}`
-      )
-      .pipe(
-        map((vocab: any) => {
-          return {
-            vocab: {
-              data: vocab.pageProps.vocab.data,
-              meta: vocab.pageProps.vocab.meta,
-              title: vocab.pageProps.vocab.title,
-            },
-          };
-        })
-      );
-  }
+ getTranslation(slug: string, word: string) {
+  const noUmlautWord = this.wordService.replaceUmlauts(word);
+  return this.http
+    .get<ITranslate>(
+   // `${window.location.origin}/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${noUmlautWord}`   // for hetzner server
+      `${window.location.origin}/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${noUmlautWord}`   // for localhost
+    )
+    .pipe(
+      map((vocab: any) => ({
+        vocab: {
+          data: vocab.pageProps.vocab.data,
+          meta: vocab.pageProps.vocab.meta,
+          title: vocab.pageProps.vocab.title,
+        },
+      }))
+    );
+}
 }

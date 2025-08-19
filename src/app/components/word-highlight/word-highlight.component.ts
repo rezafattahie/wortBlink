@@ -60,10 +60,11 @@ export class WordHighlightComponent {
   }
 
   onSelectWord(word: string, event: MouseEvent) {
+    const trimmedWord = word.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
     this.setCardPosition({ top: event.clientY, left: event.clientX });
-    this.selectedWord.emit(word);
-    this.translateService.getWordsInfo(word);
-    this.cardService.showCard(word, {
+    this.selectedWord.emit(trimmedWord);
+    this.translateService.getWordsInfo(trimmedWord);
+    this.cardService.showCard(trimmedWord, {
       template: this.cardTemplate,
       context: { result: this.wordDetails },
     });
