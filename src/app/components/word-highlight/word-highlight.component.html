@@ -1,14 +1,27 @@
 <div class="text-process">
-  @for (line of lines(); track $index) { @if (line) {
-  <div class="text-process__line">
+  @for (line of lines(); track $index) {
+  <div
+    class="text-process__line"
+    cdkDropList
+    [cdkDropListData]="line"
+    (cdkDropListDropped)="drop($event)"
+  >
     @for (word of line.words; track $index) {
-    <span class="text-process__word" (click)="onSelectWord(word, $event)">{{
-      word
-    }}</span>
+    <span
+      class="text-process__word"
+      cdkDrag
+      [cdkDragData]="word"
+      cdkDragBoundary=".text-process"
+      (click)="onSelectWord(word,$event)"
+    >
+      {{ word }}
+    </span>
     }
   </div>
-  } }
+  }
 </div>
+
+<!-- card component -->
 
 <app-card [position]="clickedPosition">
   <ng-template #cardTemplate let-result="result">

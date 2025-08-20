@@ -2,6 +2,8 @@
 <div class="modal" (click)="close()">
   <div
     class="modal-card"
+    cdkDrag
+    cdkDragBoundary=".modal"
     (click)="$event.stopPropagation()"
     [style]="{
       top: UpdatedPosition().top == 0 ? '' : UpdatedPosition().top + 'px',

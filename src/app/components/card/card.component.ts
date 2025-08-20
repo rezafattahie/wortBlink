@@ -1,4 +1,5 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 
 import { CardService } from '../../services/card.service';
 import { NgTemplateOutlet } from '@angular/common';
@@ -6,7 +7,7 @@ import { NgTemplateOutlet } from '@angular/common';
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, CdkDrag],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })

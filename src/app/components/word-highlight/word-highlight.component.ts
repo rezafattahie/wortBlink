@@ -11,6 +11,11 @@ import {
   TemplateRef,
   computed,
 } from '@angular/core';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 
 import { TranslateService } from '../../services/translate.service';
 import { wordInfoSignal } from '../../signal-store/wordInfo.signal-store';
@@ -20,7 +25,7 @@ import { CardService } from '../../services/card.service';
 @Component({
   selector: 'app-word-highlight',
   standalone: true,
-  imports: [CardComponent],
+  imports: [CardComponent, CdkDrag, CdkDropList],
   templateUrl: './word-highlight.component.html',
   styleUrl: './word-highlight.component.scss',
 })
@@ -59,8 +64,42 @@ export class WordHighlightComponent {
     this.lines.set(lines);
   }
 
+  drop(event: CdkDragDrop<{ line: number; words: string[] }, any, string>) {
+    const draggedWord = event.item.data;
+
+    let clientX = 0;
+    let clientY = 0;
+
+    if (event.event instanceof MouseEvent) {
+      clientX = event.event.clientX;
+      clientY = event.event.clientY;
+    } else if (event.event instanceof TouchEvent) {
+      clientX = event.event.touches[0].clientX;
+      clientY = event.event.touches[0].clientY;
+    }
+
+    const targetEl = document.elementFromPoint(clientX, clientY);
+    const targetSpan = targetEl?.closest('.text-process__word') as HTMLElement;
+    if (!targetSpan) return;
+
+    const targetWord = targetSpan.innerText.trim();
+    if (!draggedWord || !targetWord || draggedWord === targetWord) return;
+
+    const mergedWord = targetWord + draggedWord;
+
+    const trimmedWord = mergedWord.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
+    this.setCardPosition({ top: clientY, left: clientX });
+    this.selectedWord.emit(trimmedWord);
+    this.translateService.getWordsInfo(trimmedWord);
+    this.cardService.showCard(trimmedWord, {
+      template: this.cardTemplate,
+      context: { result: this.wordDetails },
+    });
+  }
+
+
   onSelectWord(word: string, event: MouseEvent) {
-    const trimmedWord = word.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, "");
+    const trimmedWord = word.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
     this.setCardPosition({ top: event.clientY, left: event.clientX });
     this.selectedWord.emit(trimmedWord);
     this.translateService.getWordsInfo(trimmedWord);
