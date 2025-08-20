@@ -10,9 +10,9 @@
     <span
       class="text-process__word"
       cdkDrag
-      [cdkDragData]="word"
       cdkDragBoundary=".text-process"
-      (click)="onSelectWord(word,$event)"
+      [cdkDragData]="word"
+      (click)="onSelectWord(word, $event)"
     >
       {{ word }}
     </span>

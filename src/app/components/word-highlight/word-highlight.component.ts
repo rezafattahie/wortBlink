@@ -11,11 +11,7 @@ import {
   TemplateRef,
   computed,
 } from '@angular/core';
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 
 import { TranslateService } from '../../services/translate.service';
 import { wordInfoSignal } from '../../signal-store/wordInfo.signal-store';
@@ -65,7 +61,7 @@ export class WordHighlightComponent {
   }
 
   drop(event: CdkDragDrop<{ line: number; words: string[] }, any, string>) {
-    const draggedWord = event.item.data;
+    const draggedWord = event.item.data.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
 
     let clientX = 0;
     let clientY = 0;
@@ -82,7 +78,9 @@ export class WordHighlightComponent {
     const targetSpan = targetEl?.closest('.text-process__word') as HTMLElement;
     if (!targetSpan) return;
 
-    const targetWord = targetSpan.innerText.trim();
+    const targetWord = targetSpan.innerText
+      .trim()
+      .replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
     if (!draggedWord || !targetWord || draggedWord === targetWord) return;
 
     const mergedWord = targetWord + draggedWord;
@@ -96,7 +94,6 @@ export class WordHighlightComponent {
       context: { result: this.wordDetails },
     });
   }
-
 
   onSelectWord(word: string, event: MouseEvent) {
     const trimmedWord = word.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
