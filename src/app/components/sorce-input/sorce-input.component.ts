@@ -1,5 +1,12 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Output,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SubtitleService } from '../../services/subtitle.service';
 
 @Component({
   selector: 'app-sorce-input',
@@ -9,10 +16,18 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './sorce-input.component.scss',
 })
 export class SorceInputComponent {
+  subtitleService = inject(SubtitleService);
   inputText: string = '';
   showSource = true;
+  isListenning = false;
   paddingBottom = '0px';
+  listening = signal<{ word: string; sentence: string }>({
+    word: '',
+    sentence: '',
+  });
+
   @Output() text = new EventEmitter<string>();
+
   onInputChange(event: Event) {
     const target = event.target as HTMLElement;
     this.inputText = target.innerText || '';
@@ -39,6 +54,7 @@ export class SorceInputComponent {
     }
   }
 
+
   onTextTransfere() {
     this.toggleSource();
     this.text.emit(this.inputText);
@@ -46,5 +62,32 @@ export class SorceInputComponent {
 
   toggleSource() {
     this.showSource = !this.showSource;
+  }
+  startListening() {
+    this.isListenning = !this.isListenning;
+    this.subtitleService.start(
+      (finalText) => {
+        // the whole sentence
+        this.listening.update((val) => ({
+          ...val,
+          sentence: val.sentence + ' ' + finalText,
+        }));
+        this.inputText = this.listening().sentence;
+        console.log('Final:', finalText);
+      },
+      (partialText) => {
+        // momental text
+        this.listening.update((val) => ({
+          ...val,
+          word: partialText,
+        }));
+        console.log('Partial:', partialText);
+      }
+    );
+  }
+
+  stopListening() {
+    this.isListenning = !this.isListenning;
+    this.subtitleService.stop();
   }
 }

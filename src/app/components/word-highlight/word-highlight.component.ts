@@ -17,11 +17,12 @@ import { TranslateService } from '../../services/translate.service';
 import { wordInfoSignal } from '../../signal-store/wordInfo.signal-store';
 import { CardComponent } from '../card/card.component';
 import { CardService } from '../../services/card.service';
+import { VideoPlayerComponent } from '../video-player/video-player.component';
 
 @Component({
   selector: 'app-word-highlight',
   standalone: true,
-  imports: [CardComponent, CdkDrag, CdkDropList],
+  imports: [CardComponent, CdkDrag, CdkDropList, VideoPlayerComponent],
   templateUrl: './word-highlight.component.html',
   styleUrl: './word-highlight.component.scss',
 })

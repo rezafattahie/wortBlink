@@ -82,8 +82,7 @@ export class TranslateService {
   const noUmlautWord = this.wordService.replaceUmlauts(word);
   return this.http
     .get<ITranslate>(
-   // `${window.location.origin}/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${noUmlautWord}`   // for hetzner server
-      `${window.location.origin}/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${noUmlautWord}`   // for localhost
+      `${window.location.origin}/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${noUmlautWord}`
     )
     .pipe(
       map((vocab: any) => ({

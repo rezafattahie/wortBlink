@@ -3,24 +3,92 @@
     <h2 class="source-header__title">Text eingeben</h2>
   </div>
   <div class="source-inputText-wrapper">
-    <button class="source-header__button" (click)="onTextTransfere()">
-      &UpArrow;
-    </button>
+    <div class="source-inputText-wrapper__actions">
+      <button class="source-header__button" (click)="onTextTransfere()">
+        <svg
+          height="100%"
+          style="
+            transform: rotate(90deg);
+            width: 24px;
+            fill: #000000;
+            fill-rule: evenodd;
+            clip-rule: evenodd;
+            stroke-linejoin: round;
+            stroke-miterlimit: 2;
+          "
+          version="1.1"
+          viewBox="0 0 32 32"
+          width="100%"
+          xml:space="preserve"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:serif="http://www.serif.com/"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <path
+            d="M6.202,17.009l21.796,-0.009c0.551,-0 0.999,-0.448 0.999,-1c-0,-0.552 -0.448,-1 -1,-1l-21.801,0.009c0.158,-0.453 0.425,-0.866 0.782,-1.2c0,-0 9.705,-9.079 9.705,-9.079c0.403,-0.377 0.424,-1.01 0.047,-1.413c-0.377,-0.403 -1.01,-0.424 -1.413,-0.047c-0,-0 -5.9,5.519 -9.705,9.078c-1.016,0.95 -1.59,2.281 -1.584,3.671c0.005,1.391 0.59,2.717 1.613,3.659c3.848,3.543 9.828,9.05 9.828,9.05c0.406,0.374 1.039,0.348 1.413,-0.058c0.374,-0.406 0.348,-1.04 -0.058,-1.413c-0,-0 -5.981,-5.507 -9.829,-9.05c-0.361,-0.333 -0.631,-0.745 -0.793,-1.198Z"
+          />
+        </svg>
+      </button>
+      <button
+        class="source-header__button"
+        [class.neben-listening]="isListenning"
+        (click)="isListenning ? stopListening() : startListening()"
+      >
+        <svg
+          data-name="Layer 2"
+          id="Layer_2"
+          viewBox="0 0 1000 1000"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <style>
+              .cls-1 {
+                width: 24px;
+                fill: none;
+                stroke: #50c86e;
+                stroke-linecap: round;
+                stroke-miterlimit: 10;
+                stroke-width: 60px;
+              }
+            </style>
+          </defs>
+          <path
+            class="cls-1"
+            d="M611.63,417.91v58.31c0,61.4-50.23,111.63-111.63,111.63S388.37,537.62,388.37,476.22V294.93c0-61.4,50.23-111.63,111.63-111.63A112,112,0,0,1,611.63,294.93v35.7"
+          />
+          <path
+            class="cls-1"
+            d="M689.05,487c0,104-85.07,189.05-189,189.05h0C396,676.07,311,591,311,487"
+          />
+          <line class="cls-1" x1="500" x2="500" y1="676.07" y2="808.14" />
+          <line class="cls-1" x1="582.08" x2="417.92" y1="816.7" y2="816.7" />
+          <line class="cls-1" x1="388.37" x2="611.63" y1="417.45" y2="417.45" />
+        </svg>
+      </button>
+    </div>
 
-<div class="source-content">
-  <div
-    class="source-inputText"
-    contenteditable="true"
-    [style.padding-bottom]="paddingBottom"
-    (input)="onInputChange($event)"
-    placeholder="Geben Sie hier Ihren Text ein..."
-  ></div>
-</div>
+    <div class="source-content">
+      <div
+        class="source-inputText"
+        contenteditable="true"
+        [style.padding-bottom]="paddingBottom"
+        (input)="onInputChange($event)"
+        [textContent]="listening().sentence"
+        placeholder="Geben Sie hier Ihren Text ein..."
+      ></div>
+    </div>
   </div>
+  <div>
+    <div>
+      @if (listening().word) {
+      <p class="source-listened">{{ listening().word }}</p>
+      }
 
-  <button
-    class="toggle"
-    [style.transform]="showSource ? 'rotate(45deg)' : 'rotate(225deg)'"
-    (click)="toggleSource()"
-  ></button>
+      <button
+        class="toggle"
+        [style.transform]="showSource ? 'rotate(45deg)' : 'rotate(225deg)'"
+        (click)="toggleSource()"
+      ></button>
+    </div>
+  </div>
 </div>
