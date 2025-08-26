@@ -5,7 +5,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { WordHighlightComponent } from './components/word-highlight/word-highlight.component';
-import { sourceInputComponent } from './components/sorce-input/source-input.component';
+import { sourceInputComponent } from './components/source-input/source-input.component';
 
 describe('AppComponent', () => {
   let component: AppComponent;

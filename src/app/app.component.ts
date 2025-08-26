@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { WordHighlightComponent } from './components/word-highlight/word-highlight.component';
 import { WordListComponent } from './components/word-list/word-list.component';
 import { LoaderComponent } from "./loader/loader.component";
-import { sourceInputComponent } from './components/sorce-input/source-input.component';
+import { sourceInputComponent } from './components/source-input/source-input.component';
 
 @Component({
   selector: 'app-root',
