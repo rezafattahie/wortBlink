@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SorceInputComponent } from './components/sorce-input/sorce-input.component';
+
 import { WordHighlightComponent } from './components/word-highlight/word-highlight.component';
 import { WordListComponent } from './components/word-list/word-list.component';
 import { LoaderComponent } from "./loader/loader.component";
+import { sourceInputComponent } from './components/sorce-input/source-input.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
-    SorceInputComponent,
+    sourceInputComponent,
     WordHighlightComponent,
     WordListComponent,
     LoaderComponent

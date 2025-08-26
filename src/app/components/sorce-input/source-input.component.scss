@@ -80,11 +80,16 @@
 
 .neben-listening::after {
   position: absolute;
-  top: 0;
-  content: "&#xe029;";
+  top: 50%;
+  right: 8%;
+  transform: translateY(-50%);
+  content: "";
   display: flex;
   font-size: 8px;
-  transition: all 2s;
+  outline: 1px dashed #1c6790;
+  padding: 1rem;
+  border-radius: 2rem;
+  animation: neben-listening 2s infinite;
 }
 
 .show {
@@ -120,15 +125,11 @@
   height: auto;
 }
 
-.changed {
-  transform: translate(-20px);
-  opacity: 0;
-  animation: change-text 0.3s;
-}
-
-@keyframes change-text {
+@keyframes neben-listening {
+  0% {
+    outline: 0px solid #1c6790;
+  }
   100% {
-    transform: none;
-    opacity: 1;
+    outline: 12px solid #1c679000;
   }
 }

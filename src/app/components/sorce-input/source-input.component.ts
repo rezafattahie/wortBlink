@@ -9,13 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { SubtitleService } from '../../services/subtitle.service';
 
 @Component({
-  selector: 'app-sorce-input',
+  selector: 'app-source-input',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './sorce-input.component.html',
-  styleUrl: './sorce-input.component.scss',
+  templateUrl: './source-input.component.html',
+  styleUrl: './source-input.component.scss',
 })
-export class SorceInputComponent {
+export class sourceInputComponent {
   subtitleService = inject(SubtitleService);
   inputText: string = '';
   showSource = true;

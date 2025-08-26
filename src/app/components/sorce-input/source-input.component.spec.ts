@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { sourceInputComponent } from './source-input.component';
 
-import { SorceInputComponent } from './sorce-input.component';
 
-describe('SorceInputComponent', () => {
-  let component: SorceInputComponent;
-  let fixture: ComponentFixture<SorceInputComponent>;
+describe('sourceInputComponent', () => {
+  let component: sourceInputComponent;
+  let fixture: ComponentFixture<sourceInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SorceInputComponent]
+      imports: [sourceInputComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SorceInputComponent);
+    fixture = TestBed.createComponent(sourceInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
