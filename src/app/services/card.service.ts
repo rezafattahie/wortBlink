@@ -6,6 +6,8 @@ import { IModal } from '../models/modal.iterface';
 export class CardService {
   private _state = signal<IModal>({
     visible: false,
+    title: '',
+    data: { template: {} as TemplateRef<any>, context: '' },
   });
 
   // expose computed signals
@@ -24,7 +26,14 @@ export class CardService {
   }
 
   hideCard() {
-    this._state.update((state) => ({ ...state, visible: false }));
+    this._state.set({
+      visible: false,
+      title: '',
+      data: {
+        template: {} as TemplateRef<any>,
+        context: '',
+      },
+    });
   }
 
   toggleCard() {

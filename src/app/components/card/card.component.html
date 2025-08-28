@@ -22,7 +22,7 @@
     </div>
 
     <div class="modal-card__content">
-      @if (data() && data()?.template) {
+      @if (data() && data().template) {
       <ng-container
         *ngTemplateOutlet="data()!.template; context: data()!.context || {}"
       ></ng-container>
