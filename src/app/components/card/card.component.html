@@ -6,11 +6,12 @@
     cdkDragBoundary=".modal"
     (click)="$event.stopPropagation()"
     [style]="{
+      width: width() + '%',
+      height: height() + '%',
       top: UpdatedPosition().top == 0 ? '' : UpdatedPosition().top + 'px',
       left: UpdatedPosition().left == 0 ? '' : UpdatedPosition().left + 'px', 
       right: UpdatedPosition().right == 0 ? '' : UpdatedPosition().right + 'px', 
-      bottom: UpdatedPosition().bottom == 0 ? '' : UpdatedPosition().bottom + 'px',
-      
+      bottom: UpdatedPosition().bottom == 0 ? '' : UpdatedPosition().bottom + 'px',      
     }"
   >
     <div class="modal-card__header">
