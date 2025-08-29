@@ -31,6 +31,7 @@ export class WordHighlightComponent {
   cardService = inject(CardService);
 
   textToProcess = input<string>('');
+  hoverTranslate = signal<string>('Translating...');
   activeTab: 'translation' | 'examples' | 'phrases' | 'daily' = 'translation';
   clickedPosition = { top: 0, left: 0, right: 0, bottom: 0 };
   wordDetails = computed(() => wordInfoSignal());
@@ -62,6 +63,7 @@ export class WordHighlightComponent {
   }
 
   drop(event: CdkDragDrop<{ line: number; words: string[] }, any, string>) {
+    this.hoverTranslate.set('');
     const draggedWord = event.item.data.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
 
     let clientX = 0;
@@ -97,6 +99,7 @@ export class WordHighlightComponent {
   }
 
   onSelectWord(word: string, event: MouseEvent) {
+    this.hoverTranslate.set('');
     const trimmedWord = word.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
     this.setCardPosition({ top: event.clientY, left: event.clientX });
     this.selectedWord.emit(trimmedWord);
@@ -108,8 +111,8 @@ export class WordHighlightComponent {
   }
 
   setCardPosition(position: { top: number; left: number }) {
-    const cardWidth = window.innerWidth * 0.35;
-    const cardHeight = window.innerHeight * 0.8;
+    const cardWidth = window.innerWidth * (this.hoverTranslate() ? 0.3 : 0.35);
+    const cardHeight = window.innerHeight * (this.hoverTranslate() ? 0.1 : 0.8);
 
     let left: number = position.left;
     let top: number = position.top;
@@ -145,5 +148,20 @@ export class WordHighlightComponent {
       });
     });
     return examples;
+  }
+
+  getHoverTranslation(word: string, event: MouseEvent) {
+    this.setCardPosition({ top: event.clientY, left: event.clientX });
+    this.translateService.getHoverTranslation(word).subscribe({
+      next: (result: any) => {
+        this.hoverTranslate.set(
+          (result.data.hoverDictEntries as string[]).join(' ، ')
+        );
+        this.cardService.showCard('', {
+          template: this.cardTemplate,
+          context: { result: this.hoverTranslate },
+        });
+      },
+    });
   }
 }

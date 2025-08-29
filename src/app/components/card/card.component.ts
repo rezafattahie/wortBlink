@@ -28,8 +28,8 @@ export class CardComponent {
     right: 0,
     bottom: 0,
   });
-  width = input<number>(35);
-  height = input<number>(80);
+  width = input<number>();
+  height = input<number>();
   UpdatedPosition = signal<{
     top: number;
     left: number;

@@ -12,19 +12,16 @@
   position: absolute;
   background-color: #242b34;
   color: #c0e1ff;
-
   border-radius: 2rem;
   box-shadow: 1px 1px 5px #201b0c;
-  animation: modal-card-toggle 0.1s;
+  animation: modal-card-toggle 0.2s;
 
   @keyframes modal-card-toggle {
     from {
-      width: 0%;
-      height: 0%;
+      opacity: 0;
     }
     to {
-      width: 35%;
-      height: 80%;
+      opacity: 1;
     }
   }
 

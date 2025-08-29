@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { forkJoin, map } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { IDaily } from '../models/daily.interface.ts';
 import { IPhrase } from '../models/phraseinterface';
 import { WordService } from './word.service';
 import { ITranslate } from '../models/translate.interface';
+import { NO_LOADER } from '../loader/loader-context';
 
 @Injectable({
   providedIn: 'root',
@@ -78,20 +79,29 @@ export class TranslateService {
     });
   }
 
- getTranslation(slug: string, word: string) {
-  const noUmlautWord = this.wordService.replaceUmlauts(word);
-  return this.http
-    .get<ITranslate>(
-      `${window.location.origin}/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${noUmlautWord}`
-    )
-    .pipe(
-      map((vocab: any) => ({
-        vocab: {
-          data: vocab.pageProps.vocab.data,
-          meta: vocab.pageProps.vocab.meta,
-          title: vocab.pageProps.vocab.title,
-        },
-      }))
+  getTranslation(slug: string, word: string) {
+    const noUmlautWord = this.wordService.replaceUmlauts(word);
+    return this.http
+      .get<ITranslate>(
+        `${window.location.origin}/_next/data/EQd-Wpmr1jGk8WWBnaLJ7/fa/woerterbuch/deutsch-persisch/${slug}.json?slug=${noUmlautWord}`
+      )
+      .pipe(
+        map((vocab: any) => ({
+          vocab: {
+            data: vocab.pageProps.vocab.data,
+            meta: vocab.pageProps.vocab.meta,
+            title: vocab.pageProps.vocab.title,
+          },
+        }))
+      );
+  }
+
+  getHoverTranslation(word: string) {
+    return this.http.get(
+      `https://api-cdn-plus.dioco.io/base_dict_getHoverDict_8?form=${word}&lemma=&sl=de&tl=fa&pos=ADJ&pow=n`,
+      {
+        context: new HttpContext().set(NO_LOADER, true), // tell loader.interceptor not to use loading spinner for this request
+      }
     );
-}
+  }
 }

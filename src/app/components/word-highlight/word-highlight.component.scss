@@ -47,18 +47,22 @@
     }
 
     &:nth-child(1) {
-      border-bottom: 2px solid #ffd63a;
+      border-bottom: 2px solid #a4f032;
     }
     &:nth-child(2) {
-      border-bottom: 2px solid #efeeea;
+      border-bottom: 2px solid #ffaa34;
     }
     &:nth-child(3) {
-      border-bottom: 2px solid #03a791;
+      border-bottom: 2px solid #1d61ff;
     }
     &:nth-child(4) {
-      border-bottom: 2px solid #ff0b55;
+      border-bottom: 2px solid #fd226b;
     }
   }
+}
+
+.hover-translate {
+  direction: rtl;
 }
 
 .cdk-drag-preview {
@@ -74,4 +78,3 @@
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-

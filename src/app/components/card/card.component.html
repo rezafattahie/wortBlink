@@ -19,7 +19,9 @@
       <span class="modal-card__header-return" (click)="close()"
         >&LeftArrow;</span
       >
+      @if (title()) {
       <h4 class="modal-card__title">{{ title() }}</h4>
+      }
     </div>
 
     <div class="modal-card__content">

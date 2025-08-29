@@ -12,7 +12,8 @@
       cdkDrag
       cdkDragBoundary=".text-process"
       [cdkDragData]="word"
-      (click)="onSelectWord(word, $event)"
+      (click)="$event.ctrlKey && onSelectWord(word, $event)"
+      (click)="!$event.ctrlKey && getHoverTranslation(word, $event)"
     >
       {{ word }}
     </span>
@@ -25,8 +26,13 @@
 
 <!-- card component -->
 
-<app-card [position]="clickedPosition">
+<app-card
+  [position]="clickedPosition"
+  [width]="hoverTranslate() ? 25 : 35"
+  [height]="hoverTranslate() ? 10 : 80"
+>
   <ng-template #cardTemplate let-result="result">
+    @if (!hoverTranslate()) {
     <div class="tabs">
       <button
         (click)="activeTab = 'translation'"
@@ -82,5 +88,8 @@
       <small>{{ d.subcategoryDe }} / {{ d.subcategoryFa }}</small>
       } }
     </div>
+    } @else {
+    <p class="hover-translate">{{ result() }}</p>
+    }
   </ng-template>
 </app-card>
