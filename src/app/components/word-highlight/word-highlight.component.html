@@ -28,11 +28,11 @@
 
 <app-card
   [position]="clickedPosition"
-  [width]="hoverTranslate() ? 25 : 35"
-  [height]="hoverTranslate() ? 10 : 80"
+  [width]="hoverTranslate() == 'No data' ? 35 : 25"
+  [height]="hoverTranslate() == 'No data' ? 80 : 10"
 >
   <ng-template #cardTemplate let-result="result">
-    @if (!hoverTranslate()) {
+    @if (hoverTranslate() == 'No data') {
     <div class="tabs">
       <button
         (click)="activeTab = 'translation'"

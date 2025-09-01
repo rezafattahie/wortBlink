@@ -31,7 +31,7 @@ export class WordHighlightComponent {
   cardService = inject(CardService);
 
   textToProcess = input<string>('');
-  hoverTranslate = signal<string>('Translating...');
+  hoverTranslate = signal<string>('No data');
   activeTab: 'translation' | 'examples' | 'phrases' | 'daily' = 'translation';
   clickedPosition = { top: 0, left: 0, right: 0, bottom: 0 };
   wordDetails = computed(() => wordInfoSignal());
@@ -63,8 +63,8 @@ export class WordHighlightComponent {
   }
 
   drop(event: CdkDragDrop<{ line: number; words: string[] }, any, string>) {
-    this.hoverTranslate.set('');
     const draggedWord = event.item.data.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
+    this.hoverTranslate.set('No data');
 
     let clientX = 0;
     let clientY = 0;
@@ -99,8 +99,8 @@ export class WordHighlightComponent {
   }
 
   onSelectWord(word: string, event: MouseEvent) {
-    this.hoverTranslate.set('');
     const trimmedWord = word.replace(/[^a-zA-Z0-9äöüÄÖÜß]+$/g, '');
+    this.hoverTranslate.set('No data');
     this.setCardPosition({ top: event.clientY, left: event.clientX });
     this.selectedWord.emit(trimmedWord);
     this.translateService.getWordsInfo(trimmedWord);
@@ -112,9 +112,9 @@ export class WordHighlightComponent {
 
   setCardPosition(position: { top: number; left: number }) {
     const cardWidth =
-      window.innerWidth * (this.hoverTranslate() == '' ? 0.3 : 0.35);
+      window.innerWidth * (this.hoverTranslate() == 'No data' ? 0.35 : 0.25);
     const cardHeight =
-      window.innerHeight * (this.hoverTranslate() == '' ? 0.1 : 0.8);
+      window.innerHeight * (this.hoverTranslate() == 'No data' ? 0.8 : 0.1);
 
     let left: number = position.left;
     let top: number = position.top;
