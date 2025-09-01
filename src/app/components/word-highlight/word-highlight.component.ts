@@ -111,8 +111,10 @@ export class WordHighlightComponent {
   }
 
   setCardPosition(position: { top: number; left: number }) {
-    const cardWidth = window.innerWidth * (this.hoverTranslate() ? 0.3 : 0.35);
-    const cardHeight = window.innerHeight * (this.hoverTranslate() ? 0.1 : 0.8);
+    const cardWidth =
+      window.innerWidth * (this.hoverTranslate() == '' ? 0.3 : 0.35);
+    const cardHeight =
+      window.innerHeight * (this.hoverTranslate() == '' ? 0.1 : 0.8);
 
     let left: number = position.left;
     let top: number = position.top;
@@ -151,6 +153,7 @@ export class WordHighlightComponent {
   }
 
   getHoverTranslation(word: string, event: MouseEvent) {
+    this.hoverTranslate.set('');
     this.setCardPosition({ top: event.clientY, left: event.clientX });
     this.translateService.getHoverTranslation(word).subscribe({
       next: (result: any) => {
