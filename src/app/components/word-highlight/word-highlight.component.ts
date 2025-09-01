@@ -30,6 +30,7 @@ export class WordHighlightComponent {
   translateService = inject(TranslateService);
   cardService = inject(CardService);
 
+  longPressTimer: any; // to set a timer for long press in mobile mode
   textToProcess = input<string>('');
   hoverTranslate = signal<string>('No data');
   activeTab: 'translation' | 'examples' | 'phrases' | 'daily' = 'translation';
@@ -166,5 +167,22 @@ export class WordHighlightComponent {
         });
       },
     });
+  }
+
+  onMobileTouchStart(word: string, event: TouchEvent) {
+    event.preventDefault();
+    this.longPressTimer = setTimeout(() => {
+      this.onSelectWord(word, event as any);
+      this.longPressTimer = null;
+    }, 300);
+  }
+
+  onMobileTouchEnd(word: string, event: TouchEvent) {
+    event.preventDefault();
+    if (this.longPressTimer) {
+      clearTimeout(this.longPressTimer);
+      this.longPressTimer = null;
+      this.getHoverTranslation(word, event as any);
+    }
   }
 }

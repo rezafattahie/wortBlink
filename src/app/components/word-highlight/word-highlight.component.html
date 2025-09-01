@@ -12,8 +12,13 @@
       cdkDrag
       cdkDragBoundary=".text-process"
       [cdkDragData]="word"
-      (click)="$event.ctrlKey && onSelectWord(word, $event)"
-      (click)="!$event.ctrlKey && getHoverTranslation(word, $event)"
+      (touchstart)="onMobileTouchStart(word, $event)"
+      (touchend)="onMobileTouchEnd(word, $event)"
+      (click)="
+        $event.ctrlKey
+          ? onSelectWord(word, $event)
+          : getHoverTranslation(word, $event)
+      "
     >
       {{ word }}
     </span>
